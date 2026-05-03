@@ -1,13 +1,20 @@
 const AVAILABLE_TF = ["5m", "30m", "1h", "4h", "1d"];
 
+// Absolutní URL k data.json – 100% funkční na GitHub Pages
+const DATA_URL = "https://miroslavuherek153.github.io/zlato-s-dashboard/data.json";
+
 async function loadData() {
     try {
-        const response = await fetch("../data.json?cache=" + Date.now());
-        if (!response.ok) throw new Error("Chyba načítání data.json");
+        const response = await fetch(DATA_URL + "?cache=" + Date.now());
+
+        if (!response.ok) {
+            throw new Error("Chyba načítání data.json");
+        }
 
         const data = await response.json();
         window.dashboardData = data;
         renderDashboard(data);
+
     } catch (err) {
         document.getElementById("content").innerHTML =
             `<p class="error">❌ Chyba načítání data.json</p>`;
